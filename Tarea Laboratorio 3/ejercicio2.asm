@@ -1,13 +1,25 @@
 org   100h
-    mov ch,00
-    mov cl,[0200h]
-    mov ah, 00
-    mov al, 01
-    cmp cl, 00
-    jz salto1
-condic mul cx
-    loop condic
-salto 1 mov [0210h],ah
-        mov [0211h],al
 
-    int 20h
+section .text
+
+XOR AX,AX
+XOR CX,CX
+MOV CL, 5D
+MOV AL, 1D
+CALL FACT
+
+MOV CH,1D
+MUL CH
+MOV [20BH],AL
+
+JMP EXIT
+
+FACT:
+    MUL CL
+    SUB CL,1D
+    CMP CL,0D
+    JNZ FACT
+    RET
+
+EXIT: 
+    INT 20h
